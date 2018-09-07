@@ -9,8 +9,8 @@ Additionally, it emphasizes that you must
 before you can implement a solution to the problem in Python. 
   
 Authors: David Mutchler, Dave Fisher, Valerie Galluzzi, Amanda Stouder,
-         their colleagues and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         their colleagues and Brandon Hao.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
@@ -97,8 +97,15 @@ def draw_squares_from_circle(n, circle, window):
       :type circle: rg.Circle
       :type window: rg.RoseWindow
     """
+    circle.attach_to(window)
+    for k in range(n):
+        square = rg.Square(rg.Point(circle.center.x+circle.radius*k, circle.center.y+circle.radius*k), circle.radius*2)
+        square.attach_to(window)
+
+    window.render()
+
     # ------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #          Tests have been written for you (above).
     #
     # CONSIDER using the ACCUMULATOR IN GRAPHICS pattern,
@@ -120,6 +127,19 @@ def run_test_draw_circles_from_rectangle():
     print('Testing the  draw_circles_from_rectangle  function:')
     print('  See the graphics windows that pop up.')
     print('--------------------------------------------------')
+
+    # Test 1:
+    window = rg.RoseWindow(1000, 1000)
+    rectangle1 = rg.Rectangle(rg.Point(400, 250),rg.Point(440, 325))
+    rectangle1.fill_color = 'green'
+    rectangle1.outline_color = 'black'
+    draw_circles_from_rectangle(4, 5, rectangle1, window)
+
+    rectangle2 = rg.Rectangle(rg.Point(500, 400), rg.Point(600, 450))
+    rectangle2.fill_color = 'blue'
+    rectangle2.outline_color = 'red'
+    draw_circles_from_rectangle(8, 3, rectangle2, window)
+
 
     # ------------------------------------------------------------------
     # TODO: 3. Implement this TEST function.
@@ -175,7 +195,22 @@ def draw_circles_from_rectangle(m, n, rectangle, window):
       :type rectangle: rg.Rectangle
       :type window: rg.RoseWindow
     """
-    # ------------------------------------------------------------------
+
+    rectangle.attach_to(window)
+    for k in range(m):
+        circle = rg.Circle(rg.Point(rectangle.corner_1.x-(k+0.5)*2*(0.5*(rectangle.corner_2.y-rectangle.corner_1.y)), (rectangle.corner_1.y + 0.5*(rectangle.corner_2.y-rectangle.corner_1.y))), 0.5*(rectangle.corner_2.y-rectangle.corner_1.y))
+        circle.outline_color = 'green'
+        circle.attach_to(window)
+
+    for i in range(n):
+        circle = rg.Circle(rg.Point(0.5*(rectangle.corner_2.x+rectangle.corner_1.x), (rectangle.corner_1.y-(i+0.5)*(rectangle.corner_2.x-rectangle.corner_1.x))),0.5*(rectangle.corner_2.x-rectangle.corner_1.x))
+        circle.outline_color = rectangle.outline_color
+        circle.attach_to(window)
+
+    window.render()
+
+
+        # ------------------------------------------------------------------
     # TODO: 4. Implement and test this function.
     #          Tests have been written for you (above).
     #
